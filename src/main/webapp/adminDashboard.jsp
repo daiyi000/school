@@ -207,29 +207,29 @@
         }
         
         .notification {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    border-radius: 4px;
-    z-index: 9999;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    font-size: 14px;
-    font-weight: bold;
-    transition: opacity 0.5s, transform 0.5s;
-}
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 4px;
+            z-index: 9999;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-size: 14px;
+            font-weight: bold;
+            transition: opacity 0.5s, transform 0.5s;
+        }
 
-.notification.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
+        .notification.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
 
-.notification.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
-}
+        .notification.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
 <body>
@@ -436,12 +436,12 @@
     </form>
 
     <!-- 隐藏的表单，用于提交评论操作 (非AJAX方式使用) -->
-<form id="commentActionForm" action="adminCommentAction" method="post" style="display: none;">
-    <input type="hidden" id="commentActionCommentId" name="commentId" value="">
-    <input type="hidden" id="commentActionPostId" name="postId" value="">
-    <input type="hidden" id="commentActionType" name="action" value="">
-    <input type="hidden" name="isAjax" value="false">
-</form>
+    <form id="commentActionForm" action="adminCommentAction" method="post" style="display: none;">
+        <input type="hidden" id="commentActionCommentId" name="commentId" value="">
+        <input type="hidden" id="commentActionPostId" name="postId" value="">
+        <input type="hidden" id="commentActionType" name="action" value="">
+        <input type="hidden" name="isAjax" value="false">
+    </form>
     
     <script>
         // 显示用户详情模态框
@@ -480,6 +480,7 @@
                 if (xhr.readyState == 4) {
                     if (xhr.status == 200) {
                         document.getElementById('postDetailsContent').innerHTML = xhr.responseText;
+                        console.log("帖子详情加载完成，已准备好删除功能"); // 调试日志
                     } else {
                         document.getElementById('postDetailsContent').innerHTML = '<p>加载帖子详情失败</p>';
                     }
@@ -523,7 +524,7 @@
             }
         }
         
-        // 评论操作确认
+        // 评论操作确认 - 这个函数已不再使用，由deleteCommentWithoutRedirect取代
         function confirmCommentAction(commentId, postId, action) {
             if (action === 'delete') {
                 if (confirm("确定要删除该评论吗？此操作不可恢复！")) {
@@ -543,6 +544,116 @@
             if (event.target == document.getElementById('postDetailsModal')) {
                 document.getElementById('postDetailsModal').style.display = 'none';
             }
+        }
+        
+        // =============== 新增：删除评论相关函数 ===============
+        
+        // 全局函数：使用AJAX删除评论
+        function deleteCommentWithoutRedirect(commentId, postId) {
+          console.log("开始删除评论:", commentId, postId); // 调试日志
+          
+          if (confirm('确定要删除该评论吗？此操作不可恢复！')) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+              if (xhr.readyState === 4) {
+                console.log('Response status:', xhr.status);
+                console.log('Response text:', xhr.responseText);
+                
+                if (xhr.status === 200) {
+                  // 尝试解析JSON响应
+                  try {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                      // 从DOM中移除评论
+                      var commentElement = document.getElementById('comment-' + commentId);
+                      if (commentElement) {
+                        commentElement.parentNode.removeChild(commentElement);
+                        
+                        // 显示成功消息
+                        showNotification('评论已成功删除', 'success');
+                        
+                        // 检查是否还有评论
+                        checkRemainingComments();
+                      } else {
+                        console.error("未找到评论元素:", 'comment-' + commentId);
+                      }
+                    } else {
+                      showNotification(response.message || '删除评论失败', 'error');
+                    }
+                  } catch (e) {
+                    console.error('JSON解析错误:', e, xhr.responseText);
+                    showNotification('处理响应时出错', 'error');
+                  }
+                } else {
+                  showNotification('删除评论请求失败 (状态码: ' + xhr.status + ')', 'error');
+                }
+              }
+            };
+            
+            xhr.open('POST', 'adminCommentAction', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send('action=delete&commentId=' + commentId + '&postId=' + postId + '&isAjax=true');
+          }
+        }
+
+        // 检查剩余评论
+        function checkRemainingComments() {
+          var commentsContainer = document.getElementById('comments-container');
+          if (!commentsContainer) return;
+          
+          var comments = commentsContainer.querySelectorAll('.comment');
+          
+          if (comments.length === 0) {
+            commentsContainer.innerHTML = "<p style='text-align: center; color: #6c757d; font-style: italic; margin: 20px 0;'>暂无评论</p>";
+          }
+        }
+
+        // 显示通知消息
+        function showNotification(message, type) {
+          // 创建通知元素
+          var notification = document.createElement('div');
+          notification.className = 'notification ' + type;
+          notification.textContent = message;
+          notification.style.position = 'fixed';
+          notification.style.top = '20px';
+          notification.style.right = '20px';
+          notification.style.padding = '10px 20px';
+          notification.style.borderRadius = '4px';
+          notification.style.zIndex = '9999';
+          notification.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+          notification.style.opacity = '0';
+          notification.style.transform = 'translateY(-20px)';
+          notification.style.transition = 'opacity 0.3s, transform 0.3s';
+          
+          if (type === 'success') {
+            notification.style.backgroundColor = '#d4edda';
+            notification.style.color = '#155724';
+            notification.style.border = '1px solid #c3e6cb';
+          } else {
+            notification.style.backgroundColor = '#f8d7da';
+            notification.style.color = '#721c24';
+            notification.style.border = '1px solid #f5c6cb';
+          }
+          
+          // 添加到文档
+          document.body.appendChild(notification);
+          
+          // 显示通知
+          setTimeout(function() {
+            notification.style.opacity = '1';
+            notification.style.transform = 'translateY(0)';
+          }, 10);
+          
+          // 3秒后移除通知
+          setTimeout(function() {
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateY(-20px)';
+            setTimeout(function() {
+              if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+              }
+            }, 300);
+          }, 3000);
         }
     </script>
 </body>
