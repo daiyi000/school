@@ -6,31 +6,31 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.User;
-import service.UserService;
+import model.Administrator;
+import service.AdministratorService;
 
 import java.io.IOException;
 
-@WebServlet("/login")
-public class LoginController extends HttpServlet {
-    private UserService userService;
+@WebServlet("/adminLogin")
+public class AdminLoginController extends HttpServlet {
+    private AdministratorService adminService;
     
     @Override
     public void init() throws ServletException {
-        userService = new UserService();
+        adminService = new AdministratorService();
     }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 如果已经登录，则重定向到首页
+        // 如果已经登录，则重定向到管理员控制台
         HttpSession session = request.getSession();
-        if (session.getAttribute("user") != null) {
-            response.sendRedirect("index.jsp");
+        if (session.getAttribute("admin") != null) {
+            response.sendRedirect("adminDashboard");
             return;
         }
         
-        // 显示登录页面
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+        // 显示管理员登录页面
+        request.getRequestDispatcher("/adminLogin.jsp").forward(request, response);
     }
     
     @Override
@@ -41,30 +41,23 @@ public class LoginController extends HttpServlet {
         // 简单的输入验证
         if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
             request.setAttribute("error", "用户名和密码不能为空");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/adminLogin.jsp").forward(request, response);
             return;
         }
         
-        // 验证用户
-        User user = userService.login(username, password);
-        if (user != null) {
-            // 检查用户是否被禁用
-            if (user.getStatus() == 0) {
-                request.setAttribute("error", "您的账号已被禁用，请联系管理员");
-                request.getRequestDispatcher("/login.jsp").forward(request, response);
-                return;
-            }
-            
-            // 登录成功，将用户信息存入session
+        // 验证管理员
+        Administrator admin = adminService.login(username, password);
+        if (admin != null) {
+            // 登录成功，将管理员信息存入session
             HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+            session.setAttribute("admin", admin);
             
-            // 重定向到首页
-            response.sendRedirect("index.jsp");
+            // 重定向到管理员控制台
+            response.sendRedirect("adminDashboard");
         } else {
             // 登录失败
             request.setAttribute("error", "用户名或密码错误");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/adminLogin.jsp").forward(request, response);
         }
     }
 }

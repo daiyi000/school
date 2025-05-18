@@ -42,6 +42,12 @@
     <% 
         String keyword = (String) request.getAttribute("keyword");
         String searchType = (String) request.getAttribute("searchType");
+        
+        // 确保默认值，防止空白页面
+        if (searchType == null) {
+            searchType = "all";
+        }
+        
         if (keyword != null && !keyword.isEmpty()) {
     %>
         <div class="search-results-container">
@@ -105,6 +111,11 @@
                                     <span class="post-date"><%= sdf.format(post.getCreateTime()) %></span>
                                 </div>
                                 <div class="post-content"><%= post.getContent() %></div>
+                                <% if (post.getImagePath() != null && !post.getImagePath().isEmpty()) { %>
+                                <div class="post-image">
+                                    <img src="<%= post.getImagePath() %>" alt="帖子图片" style="max-width: 200px; max-height: 200px;">
+                                </div>
+                                <% } %>
                                 <div class="post-actions">
                                     <a href="comment?postId=<%= post.getId() %>">查看评论</a>
                                 </div>
@@ -119,9 +130,27 @@
                     %>
                 </div>
             <% } %>
+            
+            <%
+            // 如果用户和帖子都为空，则显示总体的"未找到"消息
+            List<User> users = (List<User>) request.getAttribute("users");
+            List<Post> posts = (List<Post>) request.getAttribute("posts");
+            boolean noUsers = users == null || users.isEmpty();
+            boolean noPosts = posts == null || posts.isEmpty();
+            
+            if ("all".equals(searchType) && noUsers && noPosts) {
+            %>
+                <div class="no-results-container" style="text-align: center; margin-top: 30px;">
+                    <p class="no-results" style="font-size: 1.2em;">没有找到与 "<%= keyword %>" 相关的任何结果</p>
+                    <p>请尝试使用其他关键词搜索</p>
+                </div>
+            <% } %>
         </div>
     <% } else { %>
-        <p class="no-results">请输入搜索关键词</p>
+        <div class="search-instructions" style="text-align: center; margin-top: 50px;">
+            <p>请在上方输入搜索关键词</p>
+            <p>您可以搜索用户和帖子内容</p>
+        </div>
     <% } %>
 </div>
 

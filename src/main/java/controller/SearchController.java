@@ -12,6 +12,9 @@ import service.PostService;
 import service.UserService;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/search")
@@ -47,18 +50,18 @@ public class SearchController extends HttpServlet {
             // 根据搜索类型执行相应的搜索
             if ("user".equals(type)) {
                 List<User> users = userService.searchUsersByUsername(keyword);
-                request.setAttribute("users", users);
+                request.setAttribute("users", users != null ? users : new ArrayList<>());
                 request.setAttribute("searchType", "user");
             } else if ("post".equals(type)) {
                 List<Post> posts = postService.searchPostsByContent(keyword);
-                request.setAttribute("posts", posts);
+                request.setAttribute("posts", posts != null ? posts : new ArrayList<>());
                 request.setAttribute("searchType", "post");
             } else {
                 // 默认同时搜索用户和帖子
                 List<User> users = userService.searchUsersByUsername(keyword);
                 List<Post> posts = postService.searchPostsByContent(keyword);
-                request.setAttribute("users", users);
-                request.setAttribute("posts", posts);
+                request.setAttribute("users", users != null ? users : new ArrayList<>());
+                request.setAttribute("posts", posts != null ? posts : new ArrayList<>());
                 request.setAttribute("searchType", "all");
             }
         }
@@ -74,6 +77,13 @@ public class SearchController extends HttpServlet {
         String type = request.getParameter("type");
         
         // 重定向到GET方法处理
-        response.sendRedirect("search?keyword=" + (keyword != null ? keyword : "") + "&type=" + (type != null ? type : ""));
+        // 关键修改：URL编码参数值，避免中文字符编码问题
+        String encodedKeyword = "";
+        if (keyword != null) {
+            encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
+        }
+        
+        String typeParam = (type != null) ? "&type=" + type : "";
+        response.sendRedirect("search?keyword=" + encodedKeyword + typeParam);
     }
 }

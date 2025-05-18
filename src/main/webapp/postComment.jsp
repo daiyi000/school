@@ -12,6 +12,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>帖子详情</title>
     <link rel="stylesheet" href="css/postComment.css">
+    <style>
+    /* 帖子图片相关样式 */
+    .post-image {
+        margin: 15px 0;
+        border-radius: 8px;
+        overflow: hidden;
+        max-width: 100%;
+    }
+    
+    .post-image img {
+        max-width: 100%;
+        max-height: 500px;
+        display: block;
+    }
+    </style>
 </head>
 <body>
 <%@ include file="header.jsp" %>
@@ -41,6 +56,13 @@
                 <span class="post-date">发表于 <%= sdf.format(post.getCreateTime()) %></span>
             </div>
             <div class="post-content"><%= post.getContent() %></div>
+            
+            <!-- 新增: 显示帖子图片 -->
+            <% if (post.getImagePath() != null && !post.getImagePath().isEmpty()) { %>
+            <div class="post-image">
+                <img src="<%= post.getImagePath() %>" alt="帖子图片">
+            </div>
+            <% } %>
         </div>
     <% } else { %>
         <div class="no-comments">帖子不存在</div>

@@ -17,10 +17,11 @@ public class PostDAO {
         
         try {
             conn = DBUtils.getConnection();
-            String sql = "INSERT INTO posts (user_id, content, create_time) VALUES (?, ?, NOW())";
+            String sql = "INSERT INTO posts (user_id, content, image_path, create_time) VALUES (?, ?, ?, NOW())";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, post.getUserId());
             stmt.setString(2, post.getContent());
+            stmt.setString(3, post.getImagePath());
             
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -54,6 +55,7 @@ public class PostDAO {
                 post.setUserId(rs.getInt("user_id"));
                 post.setUsername(rs.getString("username"));
                 post.setContent(rs.getString("content"));
+                post.setImagePath(rs.getString("image_path"));
                 post.setCreateTime(rs.getTimestamp("create_time"));
                 posts.add(post);
             }
@@ -86,6 +88,7 @@ public class PostDAO {
                 post.setUserId(rs.getInt("user_id"));
                 post.setUsername(rs.getString("username"));
                 post.setContent(rs.getString("content"));
+                post.setImagePath(rs.getString("image_path"));
                 post.setCreateTime(rs.getTimestamp("create_time"));
             }
         } catch (SQLException e) {
@@ -97,7 +100,7 @@ public class PostDAO {
         return post;
     }
     
- // 根据内容搜索帖子
+    // 根据内容搜索帖子
     public List<Post> searchPostsByContent(String keyword) {
         List<Post> posts = new ArrayList<>();
         Connection conn = null;
@@ -120,6 +123,7 @@ public class PostDAO {
                 post.setUserId(rs.getInt("user_id"));
                 post.setUsername(rs.getString("username"));
                 post.setContent(rs.getString("content"));
+                post.setImagePath(rs.getString("image_path"));
                 post.setCreateTime(rs.getTimestamp("create_time"));
                 posts.add(post);
             }
@@ -132,7 +136,7 @@ public class PostDAO {
         return posts;
     }
     
- // 获取帖子总数
+    // 获取帖子总数
     public int getTotalPosts() {
         int count = 0;
         Connection conn = null;
@@ -178,6 +182,7 @@ public class PostDAO {
                 post.setUserId(rs.getInt("user_id"));
                 post.setUsername(rs.getString("username"));
                 post.setContent(rs.getString("content"));
+                post.setImagePath(rs.getString("image_path"));
                 post.setCreateTime(rs.getTimestamp("create_time"));
                 posts.add(post);
             }
@@ -190,7 +195,7 @@ public class PostDAO {
         return posts;
     }
     
- // 删除帖子
+    // 删除帖子
     public boolean deletePost(int postId, int userId) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -222,6 +227,50 @@ public class PostDAO {
             stmt = conn.prepareStatement(deletePostSql);
             stmt.setInt(1, postId);
             stmt.setInt(2, userId);
+            
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                success = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(conn, stmt, null);
+        }
+        
+        return success;
+    }
+    
+ // 管理员删除帖子（不检查用户ID）
+    public boolean adminDeletePost(int postId) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean success = false;
+        
+        try {
+            conn = DBUtils.getConnection();
+            
+            // 首先检查帖子是否存在
+            String checkSql = "SELECT * FROM posts WHERE id = ?";
+            stmt = conn.prepareStatement(checkSql);
+            stmt.setInt(1, postId);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (!rs.next()) {
+                // 帖子不存在
+                return false;
+            }
+            
+            // 先删除帖子的所有评论
+            String deleteCommentsSql = "DELETE FROM comments WHERE post_id = ?";
+            stmt = conn.prepareStatement(deleteCommentsSql);
+            stmt.setInt(1, postId);
+            stmt.executeUpdate();
+            
+            // 再删除帖子
+            String deletePostSql = "DELETE FROM posts WHERE id = ?";
+            stmt = conn.prepareStatement(deletePostSql);
+            stmt.setInt(1, postId);
             
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {

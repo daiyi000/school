@@ -290,3 +290,57 @@ h2, h3 {
     font-size: 1.3em;
   }
 }
+/* Message attachment styles */
+.message-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.attachment-btn {
+  margin-right: 10px;
+}
+
+.paperclip-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.paperclip-icon:hover {
+  background-color: #e5e5e5;
+}
+
+#image-preview-container {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.remove-image-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 0, 0, 0.7);
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.message-image {
+  margin-top: 5px;
+  border-radius: 4px;
+  overflow: hidden;
+}

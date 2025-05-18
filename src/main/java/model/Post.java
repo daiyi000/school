@@ -8,6 +8,7 @@ public class Post {
     private String username; // 存储发帖用户的用户名，方便显示
     private String content;
     private Date createTime;
+    private String imagePath;
     
     // 构造函数
     public Post() {}
@@ -57,4 +58,14 @@ public class Post {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+    
+    
 }

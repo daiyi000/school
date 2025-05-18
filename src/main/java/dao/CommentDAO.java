@@ -174,6 +174,44 @@ public class CommentDAO {
         return success;
     }
     
+ // 管理员删除评论（不检查用户ID）
+    public boolean adminDeleteComment(int commentId) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        boolean success = false;
+        
+        try {
+            conn = DBUtils.getConnection();
+            
+            // 首先检查评论是否存在
+            String checkSql = "SELECT * FROM comments WHERE id = ?";
+            stmt = conn.prepareStatement(checkSql);
+            stmt.setInt(1, commentId);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (!rs.next()) {
+                // 评论不存在
+                return false;
+            }
+            
+            // 删除评论
+            String deleteSql = "DELETE FROM comments WHERE id = ?";
+            stmt = conn.prepareStatement(deleteSql);
+            stmt.setInt(1, commentId);
+            
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                success = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeResources(conn, stmt, null);
+        }
+        
+        return success;
+    }
+    
     // 关闭资源
     private void closeResources(Connection conn, Statement stmt, ResultSet rs) {
         if (rs != null) {

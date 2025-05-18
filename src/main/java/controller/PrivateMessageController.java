@@ -1,22 +1,30 @@
 package controller;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 import model.PrivateMessage;
 import model.User;
 import service.FriendshipService;
 import service.NotificationService;
 import service.PrivateMessageService;
+import utils.FileUploadUtils;
 import utils.PaginationUtils;
 
 import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/messages")
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024, // 1 MB
+    maxFileSize = 5 * 1024 * 1024,    // 5 MB
+    maxRequestSize = 10 * 1024 * 1024 // 10 MB
+)
 public class PrivateMessageController extends HttpServlet {
     private PrivateMessageService privateMessageService;
     private FriendshipService friendshipService;
@@ -27,6 +35,10 @@ public class PrivateMessageController extends HttpServlet {
         privateMessageService = new PrivateMessageService();
         friendshipService = new FriendshipService();
         notificationService = new NotificationService();
+        
+        // 创建上传目录
+        String basePath = getServletContext().getRealPath("/");
+        FileUploadUtils.createUploadDirectories(basePath);
     }
     
     @Override
@@ -103,8 +115,7 @@ public class PrivateMessageController extends HttpServlet {
         
         // 设置当前标签
         request.setAttribute("currentTab", tab);
-        
-        // 获取好友列表（用于发送新私信）
+     // 获取好友列表（用于发送新私信）
         List<User> friends = friendshipService.getFriendsByUserId(user.getId());
         request.setAttribute("friends", friends);
         
@@ -128,11 +139,21 @@ public class PrivateMessageController extends HttpServlet {
         String receiverIdStr = request.getParameter("receiverId");
         String content = request.getParameter("content");
         
+        // 获取图片上传部分
+        Part filePart = request.getPart("image");
+        boolean hasImage = filePart != null && filePart.getSize() > 0;
+        boolean hasContent = content != null && !content.trim().isEmpty();
+        
         // 简单的输入验证
-        if (receiverIdStr == null || receiverIdStr.trim().isEmpty() || 
-            content == null || content.trim().isEmpty()) {
-            
-            request.setAttribute("error", "收件人和内容不能为空");
+        if (receiverIdStr == null || receiverIdStr.trim().isEmpty()) {
+            request.setAttribute("error", "收件人不能为空");
+            doGet(request, response);
+            return;
+        }
+        
+        // 必须至少有内容或图片
+        if (!hasContent && !hasImage) {
+            request.setAttribute("error", "消息内容和图片不能同时为空");
             doGet(request, response);
             return;
         }
@@ -141,7 +162,29 @@ public class PrivateMessageController extends HttpServlet {
             int receiverId = Integer.parseInt(receiverIdStr);
             
             // 创建私信对象
-            PrivateMessage message = new PrivateMessage(user.getId(), receiverId, content);
+            PrivateMessage message = new PrivateMessage(user.getId(), receiverId, content != null ? content : "");
+            
+            // 处理图片上传
+            if (hasImage) {
+                // 验证图片类型
+                if (!FileUploadUtils.isImageFile(filePart)) {
+                    request.setAttribute("error", "只能上传图片文件");
+                    doGet(request, response);
+                    return;
+                }
+                
+                // 检查文件大小
+                if (FileUploadUtils.getFileSizeInMB(filePart) > 5) {
+                    request.setAttribute("error", "图片大小不能超过5MB");
+                    doGet(request, response);
+                    return;
+                }
+                
+                // 保存图片并获取路径
+                String basePath = getServletContext().getRealPath("/");
+                String imagePath = FileUploadUtils.saveUploadedFile(filePart, basePath, "messages");
+                message.setImagePath(imagePath);
+            }
             
             // 发送私信
             boolean success = privateMessageService.sendMessage(message);

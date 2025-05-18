@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>私信对话</title>
     <link rel="stylesheet" href="css/messageDetail.css">
+    
 </head>
 <body>
 <%@ include file="header.jsp" %>
@@ -99,7 +100,14 @@
                     %>
                             <div class="message-item">
                                 <div class="message-bubble <%= isSentByMe ? "sent" : "received" %>">
+                                    <% if (message.getContent() != null && !message.getContent().trim().isEmpty()) { %>
                                     <p class="message-content"><%= message.getContent() %></p>
+                                    <% } %>
+                                    <% if (message.getImagePath() != null && !message.getImagePath().isEmpty()) { %>
+                                    <div class="message-image">
+                                        <img src="<%= message.getImagePath() %>" alt="消息图片" style="max-width: 200px; max-height: 200px; margin-top: 5px;">
+                                    </div>
+                                    <% } %>
                                     <span class="message-time"><%= sdf.format(message.getCreateTime()) %></span>
                                 </div>
                                 <div style="clear: both;"></div>
@@ -116,11 +124,23 @@
                 
                 <!-- 发送消息表单 -->
                 <div class="message-form">
-                    <form action="sendMessage" method="post">
+                    <form action="sendMessage" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="receiverId" value="<%= friendId %>">
-                        <textarea name="content" class="message-input" rows="3" placeholder="输入消息..." required></textarea>
-                        <div class="send-button-container">
-                            <button type="submit" class="send-button">发送</button>
+                        <textarea name="content" class="message-input" rows="3" placeholder="输入消息..."></textarea>
+                        <div class="message-actions">
+                            <div class="attachment-btn">
+                                <label for="image" class="paperclip-icon">
+                                    <i>📎</i>
+                                </label>
+                                <input type="file" id="image" name="image" accept="image/*" style="display: none;" onchange="previewImage(this)">
+                            </div>
+                            <div id="image-preview-container" style="display: none; margin-top: 5px;">
+                                <img id="image-preview" src="#" alt="预览" style="max-width: 100px; max-height: 100px;">
+                                <button type="button" onclick="removeImage()" class="remove-image-btn">×</button>
+                            </div>
+                            <div class="send-button-container">
+                                <button type="submit" class="send-button">发送</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -137,6 +157,25 @@
                 messageContainer.scrollTop = messageContainer.scrollHeight;
             }
         };
+        
+        // 图片预览功能
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    document.getElementById('image-preview').src = e.target.result;
+                    document.getElementById('image-preview-container').style.display = 'flex';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeImage() {
+            document.getElementById('image').value = '';
+            document.getElementById('image-preview-container').style.display = 'none';
+        }
     </script>
     
     <%@ include file="footer.jsp" %>

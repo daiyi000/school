@@ -47,4 +47,9 @@ public class PostService {
     public boolean deletePost(int postId, int userId) {
         return postDAO.deletePost(postId, userId);
     }
+    
+ // 管理员删除帖子
+    public boolean adminDeletePost(int postId) {
+        return postDAO.adminDeletePost(postId);
+    }
 }

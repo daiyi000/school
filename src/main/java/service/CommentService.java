@@ -45,4 +45,9 @@ public class CommentService {
         List<Comment> comments = getCommentsByPostIdWithPagination(postId, page, pageSize);
         return new PaginationUtils<>(comments, pageSize, page, totalComments);
     }
+    
+ // 管理员删除评论
+    public boolean adminDeleteComment(int commentId) {
+        return commentDAO.adminDeleteComment(commentId);
+    }
 }

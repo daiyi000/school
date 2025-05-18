@@ -11,6 +11,7 @@ public class PrivateMessage {
     private String content;
     private int isRead; // 0: 未读, 1: 已读
     private Date createTime;
+    private String imagePath;
     
     // 构造函数
     public PrivateMessage() {}
@@ -85,5 +86,13 @@ public class PrivateMessage {
     
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+    
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

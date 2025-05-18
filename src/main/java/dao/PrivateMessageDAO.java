@@ -17,12 +17,13 @@ public class PrivateMessageDAO {
         
         try {
             conn = DBUtils.getConnection();
-            String sql = "INSERT INTO private_messages (sender_id, receiver_id, content, is_read, create_time) " +
-                         "VALUES (?, ?, ?, 0, NOW())";
+            String sql = "INSERT INTO private_messages (sender_id, receiver_id, content, image_path, is_read, create_time) " +
+                         "VALUES (?, ?, ?, ?, 0, NOW())";
             stmt = conn.prepareStatement(sql);
             stmt.setInt(1, message.getSenderId());
             stmt.setInt(2, message.getReceiverId());
             stmt.setString(3, message.getContent());
+            stmt.setString(4, message.getImagePath());
             
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -64,6 +65,7 @@ public class PrivateMessageDAO {
                 message.setReceiverId(rs.getInt("receiver_id"));
                 message.setReceiverUsername(rs.getString("receiver_username"));
                 message.setContent(rs.getString("content"));
+                message.setImagePath(rs.getString("image_path"));
                 message.setIsRead(rs.getInt("is_read"));
                 message.setCreateTime(rs.getTimestamp("create_time"));
                 messages.add(message);
@@ -104,6 +106,7 @@ public class PrivateMessageDAO {
                 message.setReceiverId(rs.getInt("receiver_id"));
                 message.setReceiverUsername(rs.getString("receiver_username"));
                 message.setContent(rs.getString("content"));
+                message.setImagePath(rs.getString("image_path"));
                 message.setIsRead(rs.getInt("is_read"));
                 message.setCreateTime(rs.getTimestamp("create_time"));
                 messages.add(message);
@@ -147,6 +150,7 @@ public class PrivateMessageDAO {
                 message.setReceiverId(rs.getInt("receiver_id"));
                 message.setReceiverUsername(rs.getString("receiver_username"));
                 message.setContent(rs.getString("content"));
+                message.setImagePath(rs.getString("image_path"));
                 message.setIsRead(rs.getInt("is_read"));
                 message.setCreateTime(rs.getTimestamp("create_time"));
                 messages.add(message);
@@ -195,7 +199,7 @@ public class PrivateMessageDAO {
         return count;
     }
     
- // 获取用户收到的私信总数
+    // 获取用户收到的私信总数
     public int getTotalReceivedMessages(int userId) {
         int count = 0;
         Connection conn = null;
@@ -277,6 +281,7 @@ public class PrivateMessageDAO {
                 message.setReceiverId(rs.getInt("receiver_id"));
                 message.setReceiverUsername(rs.getString("receiver_username"));
                 message.setContent(rs.getString("content"));
+                message.setImagePath(rs.getString("image_path"));
                 message.setIsRead(rs.getInt("is_read"));
                 message.setCreateTime(rs.getTimestamp("create_time"));
                 messages.add(message);
@@ -320,6 +325,7 @@ public class PrivateMessageDAO {
                 message.setReceiverId(rs.getInt("receiver_id"));
                 message.setReceiverUsername(rs.getString("receiver_username"));
                 message.setContent(rs.getString("content"));
+                message.setImagePath(rs.getString("image_path"));
                 message.setIsRead(rs.getInt("is_read"));
                 message.setCreateTime(rs.getTimestamp("create_time"));
                 messages.add(message);
@@ -396,6 +402,7 @@ public class PrivateMessageDAO {
                 message.setReceiverId(rs.getInt("receiver_id"));
                 message.setReceiverUsername(rs.getString("receiver_username"));
                 message.setContent(rs.getString("content"));
+                message.setImagePath(rs.getString("image_path"));
                 message.setIsRead(rs.getInt("is_read"));
                 message.setCreateTime(rs.getTimestamp("create_time"));
                 messages.add(message);

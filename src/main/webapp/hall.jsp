@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>大厅</title>
 <link rel="stylesheet" href="css/hall.css">
-<script src="js/hall.js"></script>
+
 </head>
 <body>
 <%@ include file="header.jsp" %>
@@ -32,9 +32,18 @@
             <%= request.getAttribute("error") %>
         </div>
         <% } %>
-        <form action="post" method="post">
+        <form action="post" method="post" enctype="multipart/form-data">
             <textarea name="content" rows="4" cols="50" placeholder="写点什么..." required></textarea>
-            <br>
+            <div class="image-upload-container">
+                <label for="image" class="image-upload-label">
+                    <i class="image-icon">📷</i> 添加图片
+                </label>
+                <input type="file" id="image" name="image" accept="image/*" style="display: none;" onchange="previewImage(this)">
+                <div id="image-preview-container" style="display: none; margin-top: 10px;">
+                    <img id="image-preview" src="#" alt="预览" style="max-width: 200px; max-height: 200px;">
+                    <button type="button" onclick="removeImage()" style="margin-left: 10px;">删除</button>
+                </div>
+            </div>
             <button type="submit">发布</button>
         </form>
     </div>
@@ -56,6 +65,11 @@
         <div class="post">
             <p class="post-header"><strong class="post-username"><%= post.getUsername() %></strong> 发表于 <%= sdf.format(post.getCreateTime()) %></p>
             <p class="post-content"><%= post.getContent() %></p>
+            <% if (post.getImagePath() != null && !post.getImagePath().isEmpty()) { %>
+            <div class="post-image">
+                <img src="<%= post.getImagePath() %>" alt="帖子图片" style="max-width: 100%; max-height: 400px;">
+            </div>
+            <% } %>
             <p class="post-actions">
                 <a href="comment?postId=<%= post.getId() %>">查看评论</a>
                 <% if (user != null && post.getUserId() == user.getId()) { %>
@@ -94,6 +108,25 @@
         document.getElementById("deletePostId").value = postId;
         document.getElementById("deletePostForm").submit();
       }
+    }
+
+    // 图片预览功能
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+                document.getElementById('image-preview').src = e.target.result;
+                document.getElementById('image-preview-container').style.display = 'block';
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function removeImage() {
+        document.getElementById('image').value = '';
+        document.getElementById('image-preview-container').style.display = 'none';
     }
 
     // 显示操作结果消息

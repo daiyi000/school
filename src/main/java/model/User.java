@@ -7,7 +7,8 @@ public class User {
     private String email;
     private String bio;
     private String registerTime;
-
+    private int status; 
+    
     // 构造函数
     public User() {}
     
@@ -64,5 +65,18 @@ public class User {
 
     public void setRegisterTime(String registerTime) {
         this.registerTime = registerTime;
+    }
+    
+    public int getStatus() {
+        return status;
+    }
+    
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
+    // 辅助方法
+    public boolean isActive() {
+        return status == 1;
     }
 }

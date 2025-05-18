@@ -41,4 +41,41 @@ public class UserService {
     public List<User> searchUsersByUsername(String username) {
         return userDAO.searchUsersByUsername(username);
     }
+    
+ // 获取所有用户
+    public List<User> getAllUsers() {
+        return userDAO.getAllUsers();
+    }
+
+    // 获取用户总数
+    public int getTotalUsers() {
+        return userDAO.getTotalUsers();
+    }
+
+    // 分页获取用户
+    public List<User> getAllUsersWithPagination(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        return userDAO.getAllUsersWithPagination(offset, pageSize);
+    }
+    
+ // 删除用户账户
+    public boolean deleteUser(int userId) {
+        return userDAO.deleteUser(userId);
+    }
+    
+    // 禁用用户账户
+    public boolean disableUser(int userId) {
+        return userDAO.updateUserStatus(userId, 0);
+    }
+    
+    // 启用用户账户
+    public boolean enableUser(int userId) {
+        return userDAO.updateUserStatus(userId, 1);
+    }
+    
+    // 检查用户状态
+    public boolean isUserActive(int userId) {
+        User user = userDAO.getUserById(userId);
+        return user != null && user.isActive();
+    }
 }

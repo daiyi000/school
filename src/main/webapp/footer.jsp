@@ -35,6 +35,7 @@
                 <a href="#" title="微信">微信</a>
                 <a href="#" title="微博">微博</a>
                 <a href="#" title="QQ">QQ</a>
+                <a href="adminLogin" title="管理员">管理员</a>
             </div>
         </div>
     </div>
