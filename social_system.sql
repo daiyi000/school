@@ -11,7 +11,7 @@
  Target Server Version : 80031 (8.0.31)
  File Encoding         : 65001
 
- Date: 18/05/2025 17:46:40
+ Date: 18/05/2025 18:20:49
 */
 
 SET NAMES utf8mb4;
@@ -50,13 +50,11 @@ CREATE TABLE `comments`  (
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comments
 -- ----------------------------
-INSERT INTO `comments` VALUES (29, 14, 1, '123', '2025-05-18 16:41:38');
-INSERT INTO `comments` VALUES (30, 14, 1, '12345', '2025-05-18 16:41:41');
 
 -- ----------------------------
 -- Table structure for friendships
@@ -116,7 +114,7 @@ CREATE TABLE `notifications`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 66 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 68 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of notifications
@@ -186,6 +184,8 @@ INSERT INTO `notifications` VALUES (62, 11, 'comment', '1 评论了你的帖子'
 INSERT INTO `notifications` VALUES (63, 11, 'comment', '1 评论了你的帖子', 28, 0, '2025-05-18 16:30:08');
 INSERT INTO `notifications` VALUES (64, 11, 'comment', '1 评论了你的帖子', 29, 0, '2025-05-18 16:41:38');
 INSERT INTO `notifications` VALUES (65, 11, 'comment', '1 评论了你的帖子', 30, 0, '2025-05-18 16:41:41');
+INSERT INTO `notifications` VALUES (66, 11, 'comment', '1 评论了你的帖子', 31, 0, '2025-05-18 17:59:20');
+INSERT INTO `notifications` VALUES (67, 11, 'comment', '1 评论了你的帖子', 32, 0, '2025-05-18 17:59:23');
 
 -- ----------------------------
 -- Table structure for posts
@@ -205,7 +205,6 @@ CREATE TABLE `posts`  (
 -- ----------------------------
 -- Records of posts
 -- ----------------------------
-INSERT INTO `posts` VALUES (9, 1, '啊', '2025-05-18 13:58:56', NULL);
 INSERT INTO `posts` VALUES (12, 1, '1', '2025-05-18 15:09:40', 'uploads/posts/20250518_6aa06e40-b225-42a4-bf43-f420ba1f5abd.png');
 INSERT INTO `posts` VALUES (13, 2, '阿', '2025-05-18 15:23:56', NULL);
 INSERT INTO `posts` VALUES (14, 11, '1', '2025-05-18 15:37:29', NULL);
@@ -281,7 +280,7 @@ CREATE TABLE `users`  (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, '1', '1', '1@qq.com', '1', '2025-05-17 21:11:06', 1);
+INSERT INTO `users` VALUES (1, '1', '1', '1@qq.com', '1', '2025-05-17 21:11:06', 0);
 INSERT INTO `users` VALUES (2, '2', '2', '2@qq.com', NULL, '2025-05-17 21:35:15', 1);
 INSERT INTO `users` VALUES (3, '3', '3', '3@qq.com', NULL, '2025-05-17 22:58:23', 1);
 INSERT INTO `users` VALUES (4, '4', '4', '4@qq.com', NULL, '2025-05-17 23:45:47', 1);
