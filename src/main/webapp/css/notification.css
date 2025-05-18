@@ -1,0 +1,300 @@
+/* css/notification.css - 通知页面样式 */
+
+/* 重置所有元素的默认边距和填充 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body样式 */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* 主内容容器 */
+.main-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1;
+  width: 100%;
+}
+
+/* 页面标题 */
+h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin: 30px 0;
+  font-size: 2em;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+h2 {
+  color: #2980b9;
+  margin: 20px 0 15px;
+  font-size: 1.5em;
+}
+
+/* 链接样式 */
+a {
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #2c3e50;
+  text-decoration: underline;
+}
+
+/* 按钮样式 */
+button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* 分页样式 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.pagination a, .pagination span {
+  margin: 0 5px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.3s;
+}
+
+.pagination a:hover {
+  background-color: #f5f5f5;
+}
+
+.pagination .current {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+  font-weight: bold;
+}
+
+.pagination .disabled {
+  color: #ccc;
+  border-color: #eee;
+  cursor: not-allowed;
+}
+
+/* 通知列表容器 */
+.notifications-container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+/* 标记全部已读按钮 */
+.mark-all-read {
+  text-align: right;
+  margin: 20px 0;
+}
+
+.mark-all-button {
+  background-color: #95a5a6;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.mark-all-button:hover {
+  background-color: #7f8c8d;
+}
+
+/* 通知项样式 */
+.notification-item {
+  background-color: #fff;
+  border: 1px solid #eee;
+  margin: 15px 0;
+  padding: 15px;
+  border-radius: 6px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.notification-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.notification-item.unread {
+  background-color: #edf7ff;
+  border-left: 3px solid #3498db;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.notification-type {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.notification-type-icon {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.notification-timestamp {
+  font-size: 0.85em;
+  color: #95a5a6;
+}
+
+.notification-content {
+  margin: 12px 0;
+  line-height: 1.5;
+  color: #333;
+}
+
+.notification-actions {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.notification-action-link {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 5px 10px;
+  color: #3498db;
+  border: 1px solid #3498db;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.9em;
+  transition: all 0.3s;
+}
+
+.notification-action-link:hover {
+  background-color: #3498db;
+  color: white;
+  text-decoration: none;
+}
+
+.notification-action-button {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 5px 10px;
+  color: #3498db;
+  background: none;
+  border: 1px solid #3498db;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: all 0.3s;
+}
+
+.notification-action-button:hover {
+  background-color: #3498db;
+  color: white;
+}
+
+/* 警告和成功消息 */
+.error-message {
+  background-color: #ffecec;
+  color: #e74c3c;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border-left: 4px solid #e74c3c;
+}
+
+.success-message {
+  background-color: #e8f8f5;
+  color: #27ae60;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border-left: 4px solid #27ae60;
+}
+
+/* 无通知信息 */
+.empty-message {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+  padding: 50px 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* 确保页眉页脚样式不被覆盖 */
+.header-container, 
+.footer {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 15px;
+  }
+  
+  .notification-item {
+    padding: 12px;
+  }
+  
+  .notification-header {
+    flex-direction: column;
+  }
+  
+  .notification-timestamp {
+    margin-top: 5px;
+  }
+  
+  .notification-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .notification-action-link,
+  .notification-action-button {
+    margin-top: 5px;
+    margin-left: 0;
+  }
+  
+  .mark-all-read {
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 1.8em;
+  }
+}

@@ -1,0 +1,342 @@
+/* css/friends.css - 好友管理页面样式 */
+
+/* 重置所有元素的默认边距和填充 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body样式 */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* 主内容容器 */
+.main-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1;
+  width: 100%;
+}
+
+/* 页面标题 */
+h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin: 30px 0;
+  font-size: 2em;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+h2 {
+  color: #2980b9;
+  margin: 20px 0 15px;
+  font-size: 1.5em;
+}
+
+h3 {
+  color: #34495e;
+  margin: 10px 0;
+  font-size: 1.2em;
+}
+
+/* 警告和成功消息 */
+.error-message {
+  background-color: #ffecec;
+  color: #e74c3c;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border-left: 4px solid #e74c3c;
+}
+
+.success-message {
+  background-color: #e8f8f5;
+  color: #27ae60;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border-left: 4px solid #27ae60;
+}
+
+/* 添加好友表单 */
+.add-friend-container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.add-friend-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9em;
+  margin-right: 10px;
+}
+
+.search-input:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.search-button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #3498db;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s;
+}
+
+.search-button:hover {
+  background-color: #2980b9;
+}
+
+/* 选项卡容器 */
+.tab-container {
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab-button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  background-color: #f8f9fa;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s;
+}
+
+.tab-button:hover {
+  background-color: #e9ecef;
+}
+
+.tab-button.active {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+/* 选项卡内容 */
+.tab-content {
+  background-color: #fff;
+  border-radius: 0 8px 8px 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 好友卡片 */
+.friend-card {
+  border: 1px solid #eee;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  background-color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.friend-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.friend-info {
+  margin-bottom: 15px;
+}
+
+.friend-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.friend-action-button {
+  margin-left: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  margin-bottom: 5px;
+}
+
+.message-button {
+  background-color: #27ae60;
+  color: white;
+}
+
+.message-button:hover {
+  background-color: #219955;
+  text-decoration: none;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+  text-decoration: none;
+}
+
+.accept-button {
+  background-color: #27ae60;
+  color: white;
+  margin-right: 10px;
+}
+
+.accept-button:hover {
+  background-color: #219955;
+}
+
+.reject-button {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.reject-button:hover {
+  background-color: #c0392b;
+}
+
+/* 分页样式 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.pagination a, .pagination span {
+  margin: 0 5px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.3s;
+}
+
+.pagination a:hover {
+  background-color: #f5f5f5;
+}
+
+.pagination .current {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+  font-weight: bold;
+}
+
+.pagination .disabled {
+  color: #ccc;
+  border-color: #eee;
+  cursor: not-allowed;
+}
+
+/* 空状态信息 */
+.empty-message {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+  padding: 30px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+/* 确保页眉页脚样式不被覆盖 */
+.header-container, 
+.footer {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 15px;
+  }
+  
+  .tab-container {
+    flex-direction: column;
+    border-bottom: none;
+  }
+  
+  .tab-button {
+    margin-right: 0;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+  
+  .friend-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .friend-action-button {
+    margin-left: 0;
+    margin-top: 5px;
+    text-align: center;
+  }
+  
+  .accept-button {
+    margin-right: 0;
+    margin-bottom: 5px;
+  }
+  
+  .add-friend-form {
+    flex-direction: column;
+  }
+  
+  .search-input {
+    margin-right: 0;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  .search-button {
+    width: 100%;
+  }
+  
+  h1 {
+    font-size: 1.8em;
+  }
+  
+  h2 {
+    font-size: 1.4em;
+  }
+}

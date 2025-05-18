@@ -1,0 +1,358 @@
+/* css/comment.css - 样式表for帖子详情页面 */
+
+/* 重置所有元素的默认边距和填充 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body样式 */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* 主内容容器 */
+.main-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1;
+  width: 100%;
+}
+
+/* 页面标题 */
+h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin: 30px 0;
+  font-size: 2em;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+h2 {
+  color: #2980b9;
+  margin: 25px 0 15px;
+  font-size: 1.5em;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+/* 链接样式 */
+a {
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #2c3e50;
+  text-decoration: underline;
+}
+
+/* 欢迎信息 */
+.welcome-message {
+  background-color: #eaf2f8;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.welcome-username {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.back-link {
+  margin-left: auto;
+  background-color: #3498db;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.back-link:hover {
+  background-color: #2980b9;
+  text-decoration: none;
+}
+
+/* 帖子详情卡片 */
+.post-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+}
+
+.post-author {
+  font-weight: bold;
+  color: #2c3e50;
+  font-size: 1.1em;
+}
+
+.post-date {
+  color: #7f8c8d;
+  font-size: 0.9em;
+}
+
+.post-content {
+  line-height: 1.6;
+  font-size: 1.05em;
+  color: #333;
+  word-wrap: break-word;
+}
+
+/* 评论列表容器 */
+.comments-container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+/* 评论卡片 */
+.comment-card {
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 15px;
+  margin: 10px 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 3px solid #3498db;
+}
+
+.comment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.comment-author {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.comment-date {
+  color: #95a5a6;
+  font-size: 0.9em;
+}
+
+.comment-content {
+  margin-top: 10px;
+  line-height: 1.5;
+  color: #333;
+  word-wrap: break-word;
+}
+
+.delete-comment {
+  color: #e74c3c;
+  font-size: 0.9em;
+  transition: color 0.3s;
+}
+
+.delete-comment:hover {
+  color: #c0392b;
+  text-decoration: none;
+}
+
+/* 分页样式 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.pagination a {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border-radius: 4px;
+  background-color: #f2f2f2;
+  transition: background-color 0.3s;
+}
+
+.pagination a:hover {
+  background-color: #e0e0e0;
+}
+
+.pagination .active {
+  background-color: #3498db;
+  color: white;
+}
+
+.pagination span {
+  padding: 8px 12px;
+  margin: 0 5px;
+}
+
+/* 无评论信息 */
+.no-comments {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+/* 评论表单容器 */
+.comment-form-container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 评论文本区域 */
+.comment-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+  font-size: 1em;
+  transition: border-color 0.3s;
+}
+
+.comment-textarea:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* 提交按钮 */
+.submit-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #2980b9;
+}
+
+/* 错误消息 */
+.error-message {
+  background-color: #ffecec;
+  color: #e74c3c;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  border-left: 4px solid #e74c3c;
+}
+
+/* 登录提示 */
+.login-prompt {
+  text-align: center;
+  padding: 15px;
+  background-color: #eaf2f8;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.login-prompt a {
+  font-weight: bold;
+}
+
+/* 提示框样式 */
+.alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 4px;
+  background-color: #2ecc71;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideIn 0.3s forwards;
+}
+
+.alert-error {
+  background-color: #e74c3c;
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 确保页眉页脚样式不被覆盖 */
+.header-container, 
+.footer {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 15px;
+  }
+  
+  .post-card,
+  .comments-container,
+  .comment-form-container {
+    padding: 15px;
+  }
+  
+  h1 {
+    font-size: 1.8em;
+  }
+  
+  h2 {
+    font-size: 1.3em;
+  }
+  
+  .comment-header {
+    flex-direction: column;
+  }
+  
+  .delete-comment {
+    margin-top: 5px;
+  }
+}

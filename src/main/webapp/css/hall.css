@@ -1,0 +1,301 @@
+/* css/hall.css - 社交系统大厅页面样式 */
+
+/* 重置所有元素的默认边距和填充 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body样式 */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* 主内容区域的容器 - 与profile.css保持一致 */
+.main-container {
+  max-width: 800px; /* 与profile.css一致 */
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1;
+  width: 100%;
+}
+
+/* 页面标题 - 与profile.css完全一致 */
+h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin: 30px 0;
+  font-size: 2em;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+h2 {
+  color: #2980b9;
+  margin: 20px 0 15px;
+  font-size: 1.5em;
+}
+
+/* 链接样式 */
+a {
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #2c3e50;
+  text-decoration: underline;
+}
+
+/* 发帖表单样式 - 与profile-form-container保持一致的样式 */
+.post-form-container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 30px; /* 与profile.css一致 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px; /* 与profile.css一致 */
+}
+
+textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 1em;
+  min-height: 100px; /* 与profile.css一致 */
+  transition: border-color 0.3s;
+}
+
+textarea:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* 按钮样式 - 与profile.css完全一致 */
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* 错误消息 - 与profile.css完全一致 */
+.error-message {
+  background-color: #ffecec;
+  color: #e74c3c;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border-left: 4px solid #e74c3c;
+}
+
+/* 成功消息 */
+.success-message {
+  background-color: #e8f8f5;
+  color: #27ae60;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border-left: 4px solid #27ae60;
+}
+
+/* 登录/注册链接 - 调整为与profile.css的back-link一致 */
+.auth-links {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 1em;
+}
+
+.auth-links a {
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.auth-links a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+/* 帖子列表容器 - 与profile-info保持一致的样式 */
+.posts-container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px; /* 与profile.css一致 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 帖子卡片 - 保持独特风格但统一间距 */
+.post {
+  border: 1px solid #eee;
+  border-radius: 6px;
+  margin: 15px 0;
+  padding: 15px;
+  background-color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+  color: #7f8c8d;
+  font-size: 0.9em;
+}
+
+.post-username {
+  color: #2c3e50;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.post-content {
+  margin: 10px 0;
+  line-height: 1.5;
+  font-size: 1em;
+}
+
+.post-actions {
+  margin-top: 10px;
+  font-size: 0.9em;
+  text-align: right;
+}
+
+.post-actions a {
+  margin-left: 10px;
+}
+
+.delete-link {
+  color: #e74c3c;
+}
+
+.delete-link:hover {
+  color: #c0392b;
+}
+
+/* 分页样式 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.pagination a, .pagination span {
+  margin: 0 5px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.3s;
+}
+
+.pagination a:hover {
+  background-color: #f5f5f5;
+}
+
+.pagination .active {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+  font-weight: bold;
+}
+
+.pagination .disabled {
+  color: #ccc;
+  border-color: #eee;
+  cursor: not-allowed;
+}
+
+/* 无帖子提示 - 与profile.css的样式保持一致 */
+.no-posts {
+  text-align: center;
+  color: #7f8c8d;
+  font-style: italic;
+  margin: 15px 0;
+}
+
+/* 提示框样式 */
+.alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 4px;
+  background-color: #2ecc71;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideIn 0.3s forwards;
+}
+
+.alert-error {
+  background-color: #e74c3c;
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 确保页眉页脚样式不被覆盖 - 与profile.css完全一致 */
+.header-container, 
+.footer {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* 响应式调整 - 与profile.css完全一致 */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 15px;
+  }
+  
+  .post-form-container {
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 1.8em;
+  }
+  
+  button {
+    padding: 10px 15px;
+  }
+}
