@@ -44,35 +44,7 @@
         </div>
     <% } %>
     
-    <!-- 发送新私信表单 -->
-    <div class="message-form">
-        <h2>发送新私信</h2>
-        <form action="messages" method="post">
-            <div class="form-group">
-                <label for="receiverId">收件人:</label>
-                <select id="receiverId" name="receiverId" class="form-control" required>
-                    <option value="">选择好友</option>
-                    <% 
-                        List<User> friends = (List<User>) request.getAttribute("friends");
-                        if (friends != null) {
-                            for (User friend : friends) {
-                    %>
-                            <option value="<%= friend.getId() %>"><%= friend.getUsername() %></option>
-                    <%
-                            }
-                        }
-                    %>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="content">内容:</label>
-                <textarea id="content" name="content" class="form-control" rows="4" required></textarea>
-            </div>
-            <div class="form-group" style="text-align: right;">
-                <button type="submit" class="btn">发送</button>
-            </div>
-        </form>
-    </div>
+  
     
     <!-- 选项卡导航 -->
     <div class="tab-container">
