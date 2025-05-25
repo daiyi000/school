@@ -4,6 +4,7 @@
 <%@ page import="utils.PaginationUtils" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="utils.HtmlUtils" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,7 +65,7 @@
         %>
         <div class="post">
             <p class="post-header"><strong class="post-username"><%= post.getUsername() %></strong> 发表于 <%= sdf.format(post.getCreateTime()) %></p>
-            <p class="post-content"><%= post.getContent() %></p>
+            <p class="post-content"><%= HtmlUtils.nl2br(post.getContent()) %></p>
             <% if (post.getImagePath() != null && !post.getImagePath().isEmpty()) { %>
             <div class="post-image">
                 <img src="<%= post.getImagePath() %>" alt="帖子图片" style="max-width: 100%; max-height: 400px;">

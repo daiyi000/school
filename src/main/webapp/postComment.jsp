@@ -5,6 +5,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="utils.PaginationUtils" %>
+<%@ page import="utils.HtmlUtils" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +56,7 @@
                 <span class="post-author"><%= post.getUsername() %></span>
                 <span class="post-date">发表于 <%= sdf.format(post.getCreateTime()) %></span>
             </div>
-            <div class="post-content"><%= post.getContent() %></div>
+            <div class="post-content"><%= HtmlUtils.nl2br(post.getContent()) %></div>
             
             <!-- 新增: 显示帖子图片 -->
             <% if (post.getImagePath() != null && !post.getImagePath().isEmpty()) { %>
@@ -87,7 +88,7 @@
                             <a href="javascript:void(0)" onclick="confirmDeleteComment(<%= comment.getId() %>, <%= post.getId() %>)" class="delete-comment">删除</a>
                         <% } %>
                     </div>
-                    <div class="comment-content"><%= comment.getContent() %></div>
+                    <div class="comment-content"><%= HtmlUtils.nl2br(comment.getContent()) %></div>
                 </div>
         <%
                 }

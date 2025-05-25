@@ -4,6 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="utils.PaginationUtils" %>
+<%@ page import="utils.HtmlUtils" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +45,7 @@
         </div>
     <% } %>
     
-  
+    
     
     <!-- 选项卡导航 -->
     <div class="tab-container">
@@ -69,7 +70,7 @@
                                 <div class="message-sender">来自: <%= message.getSenderUsername() %></div>
                                 <div class="message-time"><%= sdf.format(message.getCreateTime()) %></div>
                             </div>
-                            <div class="message-content"><%= message.getContent() %></div>
+                            <div class="message-content"><%= HtmlUtils.nl2br(message.getContent()) %></div>
                             <div class="message-action">
                                 <a href="messages?friendId=<%= message.getSenderId() %>">查看对话</a>
                             </div>
@@ -111,7 +112,7 @@
                                 <div class="message-sender">发送给: <%= message.getReceiverUsername() %></div>
                                 <div class="message-time"><%= sdf.format(message.getCreateTime()) %></div>
                             </div>
-                            <div class="message-content"><%= message.getContent() %></div>
+                            <div class="message-content"><%= HtmlUtils.nl2br(message.getContent()) %></div>
                             <div class="message-action">
                                 <a href="messages?friendId=<%= message.getReceiverId() %>">查看对话</a>
                             </div>

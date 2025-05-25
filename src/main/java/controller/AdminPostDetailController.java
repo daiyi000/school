@@ -11,6 +11,7 @@ import model.Comment;
 import model.Post;
 import service.CommentService;
 import service.PostService;
+import utils.HtmlUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -98,7 +99,7 @@ public class AdminPostDetailController extends HttpServlet {
             out.println("<p><strong>发布时间:</strong> " + sdf.format(post.getCreateTime()) + "</p>");
             out.println("<p><strong>内容:</strong></p>");
             out.println("<div class='post-content' style='margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-radius: 4px;'>");
-            out.println(post.getContent());
+            out.println(HtmlUtils.nl2br(post.getContent()));
             out.println("</div>");
             
             // 显示图片（如果有）
@@ -132,7 +133,7 @@ public class AdminPostDetailController extends HttpServlet {
                     out.println("<a href='javascript:void(0)' onclick='deleteCommentWithoutRedirect(" + comment.getId() + ", " + post.getId() + ")' style='color: #e74c3c; cursor: pointer;'>删除</a>");
                     
                     out.println("</div>");
-                    out.println("<div style='margin-top: 5px;'>" + comment.getContent() + "</div>");
+                    out.println("<div style='margin-top: 5px;'>" + HtmlUtils.nl2br(comment.getContent()) + "</div>");
                     out.println("</div>");
                 }
             } else {

@@ -3,6 +3,7 @@
 <%@ page import="model.PrivateMessage" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="utils.HtmlUtils" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,7 +102,7 @@
                             <div class="message-item">
                                 <div class="message-bubble <%= isSentByMe ? "sent" : "received" %>">
                                     <% if (message.getContent() != null && !message.getContent().trim().isEmpty()) { %>
-                                    <p class="message-content"><%= message.getContent() %></p>
+                                    <p class="message-content"><%= HtmlUtils.nl2br(message.getContent()) %></p>
                                     <% } %>
                                     <% if (message.getImagePath() != null && !message.getImagePath().isEmpty()) { %>
                                     <div class="message-image">

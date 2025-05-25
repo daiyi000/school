@@ -3,6 +3,7 @@
 <%@ page import="model.Post" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="utils.HtmlUtils" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,7 +111,7 @@
                                     <span class="post-author"><%= post.getUsername() %></span>
                                     <span class="post-date"><%= sdf.format(post.getCreateTime()) %></span>
                                 </div>
-                                <div class="post-content"><%= post.getContent() %></div>
+                                <div class="post-content"><%= HtmlUtils.nl2br(post.getContent()) %></div>
                                 <% if (post.getImagePath() != null && !post.getImagePath().isEmpty()) { %>
                                 <div class="post-image">
                                     <img src="<%= post.getImagePath() %>" alt="帖子图片" style="max-width: 200px; max-height: 200px;">
